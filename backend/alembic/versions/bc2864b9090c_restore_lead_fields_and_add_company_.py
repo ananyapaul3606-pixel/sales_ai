@@ -17,105 +17,10 @@ depends_on: Union[str, Sequence[str], None] = None
 
 
 def upgrade() -> None:
-
-    # Restore fields required by Lead model
-
-    op.add_column(
-        "leads",
-        sa.Column(
-            "notes",
-            sa.Text(),
-            nullable=True
-        )
-    )
-
-    op.add_column(
-        "leads",
-        sa.Column(
-            "status",
-            sa.String(length=50),
-            nullable=False,
-            server_default="NEW"
-        )
-    )
-
-    op.add_column(
-        "leads",
-        sa.Column(
-            "score",
-            sa.Integer(),
-            nullable=False,
-            server_default="0"
-        )
-    )
-
-    op.add_column(
-        "leads",
-        sa.Column(
-            "score_label",
-            sa.String(length=20),
-            nullable=False,
-            server_default="COLD"
-        )
-    )
-
-    op.add_column(
-        "leads",
-        sa.Column(
-            "created_at",
-            sa.DateTime(),
-            nullable=False,
-            server_default=sa.text("CURRENT_TIMESTAMP")
-        )
-    )
-
-    op.add_column(
-        "leads",
-        sa.Column(
-            "updated_at",
-            sa.DateTime(),
-            nullable=False,
-            server_default=sa.text("CURRENT_TIMESTAMP")
-        )
-    )
-
-    op.add_column(
-        "leads",
-        sa.Column(
-            "owner_id",
-            sa.Integer(),
-            nullable=True
-        )
-    )
-
-    # Company intelligence fields
-
-    op.add_column(
-        "leads",
-        sa.Column(
-            "company_size",
-            sa.String(length=100),
-            nullable=True
-        )
-    )
-
-    op.add_column(
-        "leads",
-        sa.Column(
-            "funding",
-            sa.String(length=100),
-            nullable=True
-        )
-    )
-
-    op.add_column(
-        "leads",
-        sa.Column(
-            "technology_stack",
-            sa.Text(),
-            nullable=True
-        )
-    )
+    # No-op: status, score, score_label, created_at, updated_at, owner_id, notes
+    # were added by b7a2b8526add_add_lead_ai_fields, and company_size, funding,
+    # technology_stack were added by 80b5fc53adc3_add_lead_company_intelligence_fields.
+    pass
 
 
 def downgrade() -> None:
